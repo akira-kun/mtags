@@ -22,6 +22,7 @@ function mTags() {
 		appendHTML: false,
 		separator: "<br>",
 		returnFocus: true,
+		returnFocusClicked: false,
 		reset: function() {
 			this.multiTag = [];
 			this.blockTag = [];
@@ -72,11 +73,13 @@ function mTags() {
 				xhttp.setRequestHeader("pragma", "no-cache");
 				xhttp.onreadystatechange = function () {
 					if (xhttp.readyState == 4) {
-						if (callback) {
-							if (typeof callback === 'function') {
-								callback(xhttp.responseText);
-							} else if (window[instanceName][callback]) {
-								window[instanceName][callback](xhttp.responseText);
+						if (xhttp.status == 200) {
+							if (callback) {
+								if (typeof callback === 'function') {
+									callback(xhttp.responseText);
+								} else if (window[instanceName][callback]) {
+									window[instanceName][callback](xhttp.responseText);
+								}
 							}
 						}
 					}
@@ -240,7 +243,6 @@ function mTags() {
 					//alert(objsAppend.length);
 				} else {
 
-
 					var obj = document.createElement("div");
 					obj.innerHTML = this.processedTemplate.trim();
 
@@ -248,6 +250,8 @@ function mTags() {
 
 						if (this.multiRenderTrigger) {
 							this.multiRenderTrigger = false;
+							var returnFocusBackup = this.returnFocus;
+							this.returnFocus = false;
 
 							var inc = 0;
 							do {
@@ -272,16 +276,68 @@ function mTags() {
 
 						if (this.returnFocus) {
 							var itab = window.lastTab || document.activeElement.tabIndex;
-
-							window.tabIndex = 0;
-							window.tabMax = 0;
-							var els = document.body.querySelectorAll('button,input,select,textarea');
 							
+							var els = document.body.querySelectorAll('button,input,select,textarea');
+							window.tabIndex = 1;
+							window.tabMax = 1;
+							var clicked = false;
+
+							if (this.returnFocusClicked) {
+								if (window["_mtags_clicked_time"] == null) {
+									window["_mtags_clicked_time"] = new Date().getTime();
+									window["_mtags_clicked_stop"] = false;
+									window["_mtags_clicked_obj"] = els[0];
+									document.getElementById(id).addEventListener("mousedown", function(event) {
+										window["_mtags_clicked_stop"] = false;
+										window["_mtags_clicked_time"] = new Date().getTime();
+									});
+									document.getElementById(id).addEventListener("mousemove", function(event) {
+										window["_mtags_pointed_x"] = event.clientX;
+										window["_mtags_pointed_y"] = event.clientY;
+									});
+								}
+								if (!window["_mtags_clicked_stop"] && (new Date().getTime()-window["_mtags_clicked_time"]) <= 100) {
+									window["_mtags_clicked_stop"] = true;
+									window["_mtags_clicked_time"] = 0;
+									if (window["_mtags_pointed_x"] && window["_mtags_pointed_y"]) {
+										window["_mtags_clicked_obj"] = document.elementFromPoint(window["_mtags_pointed_x"], window["_mtags_pointed_y"]);
+										if (!(window["_mtags_clicked_obj"].tagName.toLowerCase() == "input" && (window["_mtags_clicked_obj"].getAttribute("type") == "button" || window["_mtags_clicked_obj"].getAttribute("type") == "submit")))
+										{
+											setTimeout(function() {
+												window["_mtags_clicked_obj"].click();
+												window["_mtags_clicked_obj"].focus();
+												if (window["_mtags_clicked_obj"].value != null) {
+													var tmp = window["_mtags_clicked_obj"].value;
+													window["_mtags_clicked_obj"].value = "";
+													window["_mtags_clicked_obj"].value = tmp;
+												}
+												window["_mtags_clicked_obj"] = null;
+											},1);
+										}
+									}
+									clicked = true;
+								}			
+							}
+
 							Array.prototype.forEach.call(els, function(el) {
 								window.tabMax = window.tabIndex;
 								el.setAttribute('tabIndex',window.tabIndex++);
 								if (el.getAttribute('tabIndex') == itab) {
 									el.focus();
+									if (!clicked) {
+										window["_mtags_clicked_obj"] = el;
+										setTimeout(function() {
+											if (window["_mtags_clicked_obj"]) {
+												window["_mtags_clicked_obj"].focus();
+												if (window["_mtags_clicked_obj"].value != null) {
+													var tmp = window["_mtags_clicked_obj"].value;
+													window["_mtags_clicked_obj"].value = "";
+													window["_mtags_clicked_obj"].value = tmp;
+												}
+											}
+											window["_mtags_clicked_obj"] = null;
+										},1);
+									}
 								}
 								el.addEventListener('focus',function() {
 									window.lastTab = this.getAttribute('tabIndex');
@@ -296,6 +352,10 @@ function mTags() {
 								});
 							});
 						}
+					}
+
+					if (returnFocusBackup != null) {
+						this.returnFocus = returnFocusBackup;
 					}
 
 				}
