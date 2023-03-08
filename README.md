@@ -11,6 +11,7 @@
      [blank] {{ <option></option> }}
      [hr] {{ <option>---</option> }}
   </select>
+}}
 ```
 
 <h3>json model</h3>
