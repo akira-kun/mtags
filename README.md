@@ -1,4 +1,4 @@
-# mtags
+## mtags
 
 <h3>template html file</h3>
 
@@ -14,9 +14,9 @@
 }}
 ```
 
-<h3>json model</h3>
+## json model
 
-<pre>
+```js
 {
    "select":{
       "label":"titulo do select",
@@ -62,4 +62,5 @@
          }
       ]
    }
-}</pre>
+}
+```
