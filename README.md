@@ -2,7 +2,6 @@
 
 template html file 
 
-<code>
 [select] {{
   <label for="[name]">[label]</label>
   <select name="[name]">
@@ -12,7 +11,6 @@ template html file
   [hr] {{ <option>---</option> }}
   </select>
 }}
-</code>
 
 json model
 
