@@ -2,7 +2,7 @@
 
 <h3>template html file</h3>
 
-<html>
+<html><pre>
 [select] {{
   <label for="[name]">[label]</label>
   <select name="[name]">
@@ -12,7 +12,7 @@
   [hr] {{ <option>---</option> }}
   </select>
 }}
-</html>
+</pre></html>
 
 
 <h3>json model</h3>
