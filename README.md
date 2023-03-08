@@ -2,7 +2,7 @@
 
 <h3>template html file</h3>
 
-<pre>
+<code><pre>
 [select] {{
   <label for="[name]">[label]</label>
   <select name="[name]">
@@ -12,13 +12,12 @@
   [hr] {{ <option>---</option> }}
   </select>
 }}
-</pre>
+</pre></code>
 
 
 <h3>json model</h3>
 
-<code>
-{"select": {
+<code>{"select": {
        "label": "titulo do select",
        "name": "select1",
        "elements": [
