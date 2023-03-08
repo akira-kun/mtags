@@ -14,6 +14,22 @@
 }}</code></pre>
 
 
+<pre>
+  <code>
+    <!-- Seu código HTML aqui -->
+    <html>
+      <head>
+        <title>Título da página</title>
+      </head>
+      <body>
+        <h1>Olá, mundo!</h1>
+        <p>Este é um exemplo de página HTML.</p>
+      </body>
+    </html>
+  </code>
+</pre>
+
+
 <h3>json model</h3>
 
 <code>{"select": {
