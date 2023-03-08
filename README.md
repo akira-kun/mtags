@@ -2,7 +2,7 @@
 
 <h3>template html file</h3>
 
-<pre><code>
+```html
 [select] {{
   <label for="[name]">[label]</label>
   <select name="[name]">
@@ -11,28 +11,11 @@
   [blank] {{ <option></option> }}
   [hr] {{ <option>---</option> }}
   </select>
-}}</code></pre>
-
-
-<pre>
-  <code>
-    <!-- Seu código HTML aqui -->
-    <html>
-      <head>
-        <title>Título da página</title>
-      </head>
-      <body>
-        <h1>Olá, mundo!</h1>
-        <p>Este é um exemplo de página HTML.</p>
-      </body>
-    </html>
-  </code>
-</pre>
-
+```
 
 <h3>json model</h3>
 
-<code>{"select": {
+<code><pre>{"select": {
        "label": "titulo do select",
        "name": "select1",
        "elements": [
@@ -56,5 +39,4 @@
           }
        ]
    }
-}
-</code>
+}</pre></code>
