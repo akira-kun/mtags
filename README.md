@@ -15,7 +15,7 @@
 
 <h3>json model</h3>
 
-<code><pre>
+<pre>
 {
    "select":{
       "label":"titulo do select",
@@ -61,4 +61,4 @@
          }
       ]
    }
-}</pre></code>
+}</pre>
