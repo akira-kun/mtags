@@ -1,7 +1,8 @@
 # mtags
 
-template html file 
+<h3>template html file</h3>
 
+<pre>
 [select] {{
   <label for="[name]">[label]</label>
   <select name="[name]">
@@ -11,8 +12,10 @@ template html file
   [hr] {{ <option>---</option> }}
   </select>
 }}
+</pre>
 
-json model
+
+<h3>json model</h3>
 
 <code>
 {"select": {
